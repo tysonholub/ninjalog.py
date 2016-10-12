@@ -1,4 +1,4 @@
-__version__ = '0.1'
+__version__ = '0.2'
 
 import logging
 import requests
@@ -36,12 +36,12 @@ class NinjaLogger(logging.Handler):
     def emit(self, record):
         """
         Emit a record.
-
-        Send the record to the Web server as a percent-encoded dictionary
         """
+        from grequests import AsyncRequest
+
         try:
-            r = requests.post('http://www.ninjalog.io/api/v1/log', json={
+            AsyncRequest('post', 'http://www.ninjalog.io/api/v1/log', json={
                 'message' : self.format(record)
-            }, headers=self.headers)
+            }, headers=self.headers).send()
         except:
             self.handleError(record)

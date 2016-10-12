@@ -11,5 +11,6 @@ setup(name='ninjalog',
       packages=['ninjalog'],
       install_requires=[
         'requests',
+        'grequests',
         'pyjwt',
       ])
