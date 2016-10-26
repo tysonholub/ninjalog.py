@@ -1,11 +1,10 @@
-__version__ = '0.2'
+__version__ = '0.3'
 
 import logging
-import requests
 
 class NinjaLogger(logging.Handler):
     """
-    A class which sends records to a http://wwww.ninjalog.io
+    A class which sends records to https://wwww.ninjalog.io
     """
 
     def __init__(self, email, client_id, client_secret,
@@ -17,7 +16,9 @@ class NinjaLogger(logging.Handler):
             Accept="application/json"
         )
 
-        r = requests.post('http://www.ninjalog.io/api/v1/auth/token', json={
+        import requests
+
+        r = requests.post('https://www.ninjalog.io/api/v1/auth/token', json={
             'email' : email,
             'client_id' : client_id
         }, headers=self.headers)
@@ -40,7 +41,7 @@ class NinjaLogger(logging.Handler):
         from grequests import AsyncRequest
 
         try:
-            AsyncRequest('post', 'http://www.ninjalog.io/api/v1/log', json={
+            AsyncRequest('post', 'https://www.ninjalog.io/api/v1/log', json={
                 'message' : self.format(record)
             }, headers=self.headers).send()
         except:
